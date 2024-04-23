@@ -11,11 +11,11 @@
 
 Aqui estão alguns dos meus projetos destacados:
 
-1. **[Nome do Projeto](link para o projeto)** - Breve descrição do projeto.
-2. **[Nome do Projeto](link para o projeto)** - Breve descrição do projeto.
-3. **[Nome do Projeto](link para o projeto)** - Breve descrição do projeto.
+1. **[IEEE IES International CTF on Cybersecurity in IoT-based Applications](https://cybersec.ipb.pt/ctf-ieee-ies)** - Capture the Flag (CTF) competition in IoT domain.
+2. **[Development of Security Mechanisms for a Multi-Agent Cyber-Physical Conveyor System using Machine Learning](https://bibliotecadigital.ipb.pt/bitstream/10198/22980/1/Funchal_Gustavo.pdf)** - Master thesis.
+3. **[An Intrusion Detection System Dataset for a Multi-Agent Cyber-Physical Conveyor System](https://dados.ipb.pt/dataset.xhtml?persistentId=doi:10.34620/dadosipb/JLONBO)** - The dataset comprises data collected at the network and agent levels under normal system operation, denial of service (DoS) attacks, and malicious agent attacks.
 
-Você pode encontrar todos os meus projetos no meu [perfil do GitHub](link para o perfil).
+Você pode encontrar todos os meus projetos no meu [perfil do GitHub](https://github.com/GustavoFunchal).
 
 ## Tecnologias
 
@@ -27,7 +27,7 @@ Estou interessado(a) e tenho experiência em várias tecnologias, incluindo:
 
 ## Contato
 
-Você pode entrar em contato comigo através do meu [e-mail](seu@email.com) ou me seguir no [Twitter](link para o seu perfil no Twitter).
+Você pode entrar em contato comigo através do meu [e-mail](gustavofunchal@ipb.pt) ou me seguir no [Linkedin](https://www.linkedin.com/in/gustavo-silva-funchal-bba32014a/).
 
 ## Blog
 
