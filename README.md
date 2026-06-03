@@ -292,8 +292,7 @@ footer p{ font-family:var(--mono); font-size:.74rem; color:var(--ink-faint)}
   <p class="prose reveal d1">
     I'm a final-year PhD researcher at <b>CeDRI</b> (Research Centre in Digitalization and Intelligent
     Robotics), Instituto Politécnico de Bragança, Portugal, and affiliated with the <b>BISITE</b> group
-    at the University of Salamanca. My work is supported by an <b>FCT</b> PhD grant and the
-    <b>CyberPRAISE</b> project.
+    at the University of Salamanca. My work is supported by an <b>FCT</b> PhD grant.
   </p>
   <p class="prose reveal d2" style="margin-top:18px">
     My research sits at the intersection of <b>cybersecurity</b>, <b>multi-agent systems</b> and
