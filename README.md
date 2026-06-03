@@ -343,7 +343,7 @@ footer p{ font-family:var(--mono); font-size:.74rem; color:var(--ink-faint)}
     <div class="yr">2025</div>
     <div>
       <div class="venue">ICISSP · 11th Int. Conf. on Information Systems Security and Privacy</div>
-      <h3>Distributed Machine Learning Strategies and Agent Collaboration for IIoT Intrusion Detection</h3>
+      <h3>Distributed Machine Learning and Multi-Agent Systems for Enhanced Attack Detection and Resilience in IoT Networks</h3>
       <p>Explores distributed ML strategies and how local agents collaborate to improve detection performance under class-imbalanced, real-world network traffic.</p>
       <div class="links">
         <a href="#" class="disabled">https://www.scitepress.org/Papers/2025/131544/131544.pdf</a>
@@ -356,7 +356,7 @@ footer p{ font-family:var(--mono); font-size:.74rem; color:var(--ink-faint)}
     <div class="yr">2024</div>
     <div>
       <div class="venue">IEEE ICPS · Int. Conf. on Industrial Cyber-Physical Systems</div>
-      <h3>An Edge Multi-Agent Architecture for Intrusion Detection in Industrial Systems</h3>
+      <h3>Edge Multi-agent Intrusion Detection System Architecture for IoT Devices with Cloud Continuum</h3>
       <p>Proposes a multi-agent IDS architecture deployed at the edge, with local agents running ML models on resource-constrained devices such as the Raspberry Pi.</p>
       <div class="links">
         <a href="#" class="disabled">https://10.1109/ICPS59941.2024.10639952</a>
