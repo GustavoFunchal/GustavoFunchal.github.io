@@ -298,8 +298,8 @@ footer p{ font-family:var(--mono); font-size:.74rem; color:var(--ink-faint)}
   <p class="prose reveal d2" style="margin-top:18px">
     My research sits at the intersection of <b>cybersecurity</b>, <b>multi-agent systems</b> and
     <b>machine learning</b>: I build collaborative intrusion detection architectures where lightweight
-    local agents run on edge devices while global agents coordinate, learn, and adapt in the cloud —
-    so the system keeps improving against new and evolving threats in industrial environments.
+    local agents run on edge devices while global agents coordinate, learn, and adapt in the cloud.
+    So, the system keeps improving against new and evolving threats in industrial environments.
   </p>
 </section>
 
@@ -312,13 +312,13 @@ footer p{ font-family:var(--mono); font-size:.74rem; color:var(--ink-faint)}
   <div class="tags reveal d2">
     <span class="tag">Intrusion Detection Systems</span>
     <span class="tag">Industrial IoT (IIoT)</span>
+    <span class="tag">Industry 4.0 (I4.0)</span>
     <span class="tag">Multi-Agent Systems</span>
     <span class="tag">Edge–Cloud Continuum</span>
     <span class="tag">Machine Learning</span>
     <span class="tag">Reinforcement Learning</span>
     <span class="tag">Cyber-Physical Systems</span>
     <span class="tag">Adaptive Security</span>
-    <span class="tag">JADE / FIPA-ACL</span>
     <span class="tag">Agent Trust &amp; Collaboration</span>
   </div>
 </section>
@@ -328,13 +328,13 @@ footer p{ font-family:var(--mono); font-size:.74rem; color:var(--ink-faint)}
   <div class="sec-head reveal"><span class="sec-num">03</span><h2>Selected publications</h2><span class="rule"></span></div>
 
   <div class="pub reveal">
-    <div class="yr">2025</div>
+    <div class="yr">2026</div>
     <div>
       <div class="venue">Springer Nature Computer Science</div>
-      <h3>A Cloud-Based Adaptive Support Layer for Collaborative IDS using Reinforcement Learning</h3>
+      <h3>A Cloud-Driven Support Layer for Enhancing Distributed IDS in IoT Networks</h3>
       <p>Introduces a cloud layer where global agents use reinforcement learning to adaptively tune the collaborative detection process across heterogeneous local agents.</p>
       <div class="links">
-        <a href="#" class="disabled">DOI — add link</a>
+        <a href="#" class="disabled">[DOI](https://doi.org/10.1007/s42979-026-04750-x)</a>
         <a href="#scholar">Cite</a>
       </div>
     </div>
@@ -347,7 +347,7 @@ footer p{ font-family:var(--mono); font-size:.74rem; color:var(--ink-faint)}
       <h3>Distributed Machine Learning Strategies and Agent Collaboration for IIoT Intrusion Detection</h3>
       <p>Explores distributed ML strategies and how local agents collaborate to improve detection performance under class-imbalanced, real-world network traffic.</p>
       <div class="links">
-        <a href="#" class="disabled">DOI — add link</a>
+        <a href="#" class="disabled">[DOI](https://www.scitepress.org/Papers/2025/131544/131544.pdf)</a>
         <a href="#scholar">Cite</a>
       </div>
     </div>
@@ -360,7 +360,7 @@ footer p{ font-family:var(--mono); font-size:.74rem; color:var(--ink-faint)}
       <h3>An Edge Multi-Agent Architecture for Intrusion Detection in Industrial Systems</h3>
       <p>Proposes a multi-agent IDS architecture deployed at the edge, with local agents running ML models on resource-constrained devices such as the Raspberry Pi.</p>
       <div class="links">
-        <a href="#" class="disabled">DOI — add link</a>
+        <a href="#" class="disabled">[DOI](https://10.1109/ICPS59941.2024.10639952)</a>
         <a href="#scholar">Cite</a>
       </div>
     </div>
