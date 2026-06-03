@@ -334,7 +334,7 @@ footer p{ font-family:var(--mono); font-size:.74rem; color:var(--ink-faint)}
       <p>Introduces a cloud layer where global agents use reinforcement learning to adaptively tune the collaborative detection process across heterogeneous local agents.</p>
       <div class="links">
         <a href="#" class="disabled">https://doi.org/10.1007/s42979-026-04750-x</a>
-        <a href="#SCHOLAR">Cite</a>
+        <a id="scholar-inline" href="#">Cite</a>
       </div>
     </div>
   </div>
@@ -347,7 +347,7 @@ footer p{ font-family:var(--mono); font-size:.74rem; color:var(--ink-faint)}
       <p>Explores distributed ML strategies and how local agents collaborate to improve detection performance under class-imbalanced, real-world network traffic.</p>
       <div class="links">
         <a href="#" class="disabled">https://www.scitepress.org/Papers/2025/131544/131544.pdf</a>
-        <a href="#SCHOLAR">Cite</a>
+        <a id="scholar-inline" href="#">Cite</a>
       </div>
     </div>
   </div>
@@ -360,15 +360,14 @@ footer p{ font-family:var(--mono); font-size:.74rem; color:var(--ink-faint)}
       <p>Proposes a multi-agent IDS architecture deployed at the edge, with local agents running ML models on resource-constrained devices such as the Raspberry Pi.</p>
       <div class="links">
         <a href="#" class="disabled">https://10.1109/ICPS59941.2024.10639952</a>
-        <a href="#SCHOLAR">Cite</a>
+        <a id="scholar-inline" href="#">Cite</a>
       </div>
     </div>
   </div>
 
   <p class="prose reveal" style="margin-top:30px; font-size:.96rem; color:var(--ink-faint)">
     A full list is available on
-    <a id="scholar-inline" href="#">Google Scholar</a>. ↑ Titles above are descriptive placeholders —
-    swap in your exact titles &amp; DOIs.
+    <a id="scholar-inline" href="#">Google Scholar</a>. 
   </p>
 </section>
 
