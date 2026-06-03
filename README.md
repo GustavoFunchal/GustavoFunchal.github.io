@@ -333,8 +333,8 @@ footer p{ font-family:var(--mono); font-size:.74rem; color:var(--ink-faint)}
       <h3>A Cloud-Driven Support Layer for Enhancing Distributed IDS in IoT Networks</h3>
       <p>Introduces a cloud layer where global agents use reinforcement learning to adaptively tune the collaborative detection process across heterogeneous local agents.</p>
       <div class="links">
-        <a href="#" class="disabled">[DOI](https://doi.org/10.1007/s42979-026-04750-x)</a>
-        <a href="#scholar">Cite</a>
+        <a href="#" class="disabled">https://doi.org/10.1007/s42979-026-04750-x</a>
+        <a href="#SCHOLAR">Cite</a>
       </div>
     </div>
   </div>
@@ -346,8 +346,8 @@ footer p{ font-family:var(--mono); font-size:.74rem; color:var(--ink-faint)}
       <h3>Distributed Machine Learning Strategies and Agent Collaboration for IIoT Intrusion Detection</h3>
       <p>Explores distributed ML strategies and how local agents collaborate to improve detection performance under class-imbalanced, real-world network traffic.</p>
       <div class="links">
-        <a href="#" class="disabled">[DOI](https://www.scitepress.org/Papers/2025/131544/131544.pdf)</a>
-        <a href="#scholar">Cite</a>
+        <a href="#" class="disabled">https://www.scitepress.org/Papers/2025/131544/131544.pdf</a>
+        <a href="#SCHOLAR">Cite</a>
       </div>
     </div>
   </div>
@@ -359,8 +359,8 @@ footer p{ font-family:var(--mono); font-size:.74rem; color:var(--ink-faint)}
       <h3>An Edge Multi-Agent Architecture for Intrusion Detection in Industrial Systems</h3>
       <p>Proposes a multi-agent IDS architecture deployed at the edge, with local agents running ML models on resource-constrained devices such as the Raspberry Pi.</p>
       <div class="links">
-        <a href="#" class="disabled">[DOI](https://10.1109/ICPS59941.2024.10639952)</a>
-        <a href="#scholar">Cite</a>
+        <a href="#" class="disabled">https://10.1109/ICPS59941.2024.10639952</a>
+        <a href="#SCHOLAR">Cite</a>
       </div>
     </div>
   </div>
