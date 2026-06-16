@@ -84,6 +84,22 @@ header{
   min-height:100vh; display:flex; align-items:center;
   padding:120px 0 80px;
 }
+.hero-inner{ display:flex; align-items:center; gap:56px; width:100% }
+.hero-text{ flex:1; min-width:0 }
+.hero-photo{ flex:none }
+.hero-photo img{
+  width:240px; height:240px; border-radius:50%;
+  object-fit:cover; display:block;
+  border:1px solid var(--line);
+  box-shadow:0 0 0 6px rgba(79,224,196,.06), 0 0 60px -10px var(--glow), 0 22px 60px -22px rgba(0,0,0,.75);
+  transition:transform .4s, box-shadow .4s;
+}
+.hero-photo img:hover{ transform:translateY(-4px); box-shadow:0 0 0 6px rgba(79,224,196,.12), 0 0 70px -6px var(--glow), 0 26px 64px -22px rgba(0,0,0,.8) }
+@media(max-width:760px){
+  .hero-inner{ flex-direction:column-reverse; align-items:flex-start; gap:34px }
+  .hero-photo img{ width:150px; height:150px }
+}
+
 .kicker{
   font-family:var(--mono); font-size:.78rem; letter-spacing:.22em; text-transform:uppercase;
   color:var(--accent); margin-bottom:22px; display:flex; align-items:center; gap:12px;
@@ -107,6 +123,12 @@ h1 em{ font-style:italic; color:var(--accent)}
 }
 .affil span{display:flex; align-items:center; gap:8px}
 .affil svg{width:15px; height:15px; opacity:.8; flex:none}
+.affil-link{
+  color:var(--ink-soft); text-decoration:none;
+  border-bottom:1px solid rgba(79,224,196,.35);
+  transition:color .25s, border-color .25s;
+}
+.affil-link:hover{ color:var(--accent); border-color:var(--accent) }
 
 .hero-actions{ margin-top:40px; display:flex; flex-wrap:wrap; gap:14px; align-items:center}
 
@@ -237,51 +259,57 @@ footer p{ font-family:var(--mono); font-size:.74rem; color:var(--ink-faint)}
 
 <!-- ===================== HERO ===================== -->
 <header>
-  <div>
-    <div class="kicker reveal"><span class="dot"></span> PhD Researcher · Industrial IoT Security</div>
-    <h1 class="reveal d1">Gustavo <em>Funchal</em></h1>
-    <p class="lead reveal d2">
-      I design <b>distributed intrusion detection systems</b> for the Industrial IoT,
-      built on <b>multi-agent systems</b> that reason and adapt across the
-      <b>edge–cloud continuum</b>.
-    </p>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="kicker reveal"><span class="dot"></span> PhD Researcher · Industrial IoT Security</div>
+      <h1 class="reveal d1">Gustavo <em>Funchal</em></h1>
+      <p class="lead reveal d2">
+        I design <b>distributed intrusion detection systems</b> for the Industrial IoT,
+        built on <b>multi-agent systems</b> that reason and adapt across the
+        <b>edge–cloud continuum</b>.
+      </p>
 
-    <div class="affil reveal d3">
-      <span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h.01M15 9h.01M9 13h.01M15 13h.01"/></svg>
-        CeDRI · Instituto Politécnico de Bragança
-      </span>
-      <span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18"/></svg>
-        BISITE · University of Salamanca
-      </span>
+      <div class="affil reveal d3">
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h.01M15 9h.01M9 13h.01M15 13h.01"/></svg>
+          <a href="https://cedri.ipb.pt/" target="_blank" rel="noopener" class="affil-link">CeDRI</a> · Instituto Politécnico de Bragança
+        </span>
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18"/></svg>
+          <a href="https://bisite.usal.es/en" target="_blank" rel="noopener" class="affil-link">BISITE</a> · University of Salamanca
+        </span>
+      </div>
+
+      <div class="hero-actions reveal d4">
+        <a href="#publications" class="cta">View publications</a>
+        <a href="#" class="cta ghost" id="cv-link">Download CV</a>
+        <div class="social">
+          <!-- Google Scholar -->
+          <a class="js-scholar" href="#" title="Google Scholar" aria-label="Google Scholar">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L1 9l11 7 9-5.7V17h2V9L12 2zM5 14.5V18c0 1.7 3.1 3 7 3s7-1.3 7-3v-3.5l-7 4.5-7-4.5z"/></svg>
+          </a>
+          <!-- LinkedIn -->
+          <a href="https://www.linkedin.com/in/gustavo-silva-funchal-bba32014a/" title="LinkedIn" aria-label="LinkedIn" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.3 0-2.95-1.8-2.95s-2.08 1.4-2.08 2.85V21H9z"/></svg>
+          </a>
+          <!-- GitHub -->
+          <a href="https://github.com/GustavoFunchal" title="GitHub" aria-label="GitHub" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49l-.01-1.9c-2.78.62-3.37-1.22-3.37-1.22-.46-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.86.09-.66.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9l-.01 2.81c0 .27.18.6.69.49A10.03 10.03 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg>
+          </a>
+          <!-- ORCID -->
+          <a class="js-orcid" href="#" title="ORCID" aria-label="ORCID">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.516.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.025-5.325 5.025h-3.919V7.416zm1.444 1.303v7.444h2.297c3.272 0 4.022-2.484 4.022-3.722 0-2.016-1.284-3.722-4.097-3.722h-2.222z"/></svg>
+          </a>
+          <!-- Email -->
+          <a href="mailto:gustavofunchal@ipb.pt" title="Email" aria-label="Email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          </a>
+        </div>
+      </div>
     </div>
 
-    <div class="hero-actions reveal d4">
-      <a href="#publications" class="cta">View publications</a>
-      <a href="#" class="cta ghost" id="cv-link">Download CV</a>
-      <div class="social">
-        <!-- Google Scholar -->
-        <a id="scholar" href="#" title="Google Scholar" aria-label="Google Scholar">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L1 9l11 7 9-5.7V17h2V9L12 2zM5 14.5V18c0 1.7 3.1 3 7 3s7-1.3 7-3v-3.5l-7 4.5-7-4.5z"/></svg>
-        </a>
-        <!-- LinkedIn -->
-        <a href="https://www.linkedin.com/in/gustavo-silva-funchal-bba32014a/" title="LinkedIn" aria-label="LinkedIn" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.3 0-2.95-1.8-2.95s-2.08 1.4-2.08 2.85V21H9z"/></svg>
-        </a>
-        <!-- GitHub -->
-        <a href="https://github.com/GustavoFunchal" title="GitHub" aria-label="GitHub" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49l-.01-1.9c-2.78.62-3.37-1.22-3.37-1.22-.46-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.86.09-.66.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9l-.01 2.81c0 .27.18.6.69.49A10.03 10.03 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg>
-        </a>
-        <!-- ORCID -->
-        <a id="orcid" href="#" title="ORCID" aria-label="ORCID">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM8.2 7.4a.92.92 0 1 1 0 1.84.92.92 0 0 1 0-1.84zM7.3 10.3h1.8v6.4H7.3zM11 10.3h1.73v.87h.02c.24-.45.83-.93 1.71-.93 1.83 0 2.17 1.2 2.17 2.77v3.7h-1.8v-3.28c0-.78-.01-1.79-1.09-1.79s-1.26.85-1.26 1.73v3.34H11z"/></svg>
-        </a>
-        <!-- Email -->
-        <a href="mailto:gustavofunchal@ipb.pt" title="Email" aria-label="Email">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-        </a>
-      </div>
+    <div class="hero-photo reveal d2">
+      <img src="https://github.com/GustavoFunchal.png" alt="Gustavo Funchal" width="240" height="240">
     </div>
   </div>
 </header>
@@ -334,7 +362,7 @@ footer p{ font-family:var(--mono); font-size:.74rem; color:var(--ink-faint)}
       <p>Introduces a cloud layer where global agents use reinforcement learning to adaptively tune the collaborative detection process across heterogeneous local agents.</p>
       <div class="links">
         <a href="#" class="disabled">https://doi.org/10.1007/s42979-026-04750-x</a>
-        <a id="scholar-inline" href="#">Cite</a>
+        <a class="js-scholar" href="#" target="_blank" rel="noopener">Cite</a>
       </div>
     </div>
   </div>
@@ -347,7 +375,7 @@ footer p{ font-family:var(--mono); font-size:.74rem; color:var(--ink-faint)}
       <p>Explores distributed ML strategies and how local agents collaborate to improve detection performance under class-imbalanced, real-world network traffic.</p>
       <div class="links">
         <a href="#" class="disabled">https://www.scitepress.org/Papers/2025/131544/131544.pdf</a>
-        <a id="scholar-inline" href="#">Cite</a>
+        <a class="js-scholar" href="#" target="_blank" rel="noopener">Cite</a>
       </div>
     </div>
   </div>
@@ -360,14 +388,14 @@ footer p{ font-family:var(--mono); font-size:.74rem; color:var(--ink-faint)}
       <p>Proposes a multi-agent IDS architecture deployed at the edge, with local agents running ML models on resource-constrained devices such as the Raspberry Pi.</p>
       <div class="links">
         <a href="#" class="disabled">https://10.1109/ICPS59941.2024.10639952</a>
-        <a id="scholar-inline" href="#">Cite</a>
+        <a class="js-scholar" href="#" target="_blank" rel="noopener">Cite</a>
       </div>
     </div>
   </div>
 
   <p class="prose reveal" style="margin-top:30px; font-size:.96rem; color:var(--ink-faint)">
     A full list is available on
-    <a id="scholar-inline" href="#">Google Scholar</a>. 
+    <a class="js-scholar" href="#" target="_blank" rel="noopener">Google Scholar</a>. 
   </p>
 </section>
 
@@ -413,10 +441,10 @@ footer p{ font-family:var(--mono); font-size:.74rem; color:var(--ink-faint)}
     <h2>Let's collaborate</h2>
     <p>Open to research collaborations, discussions on IIoT security and multi-agent systems, and academic exchange. Reach out anytime.</p>
     <div class="social">
-      <a id="scholar-2" href="#" title="Google Scholar" aria-label="Google Scholar"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L1 9l11 7 9-5.7V17h2V9L12 2zM5 14.5V18c0 1.7 3.1 3 7 3s7-1.3 7-3v-3.5l-7 4.5-7-4.5z"/></svg></a>
+      <a class="js-scholar" href="#" title="Google Scholar" aria-label="Google Scholar"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L1 9l11 7 9-5.7V17h2V9L12 2zM5 14.5V18c0 1.7 3.1 3 7 3s7-1.3 7-3v-3.5l-7 4.5-7-4.5z"/></svg></a>
       <a href="https://www.linkedin.com/in/gustavo-silva-funchal-bba32014a/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.3 0-2.95-1.8-2.95s-2.08 1.4-2.08 2.85V21H9z"/></svg></a>
       <a href="https://github.com/GustavoFunchal" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49l-.01-1.9c-2.78.62-3.37-1.22-3.37-1.22-.46-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.86.09-.66.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9l-.01 2.81c0 .27.18.6.69.49A10.03 10.03 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg></a>
-      <a id="orcid-2" href="#" title="ORCID" aria-label="ORCID"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM8.2 7.4a.92.92 0 1 1 0 1.84.92.92 0 0 1 0-1.84zM7.3 10.3h1.8v6.4H7.3zM11 10.3h1.73v.87h.02c.24-.45.83-.93 1.71-.93 1.83 0 2.17 1.2 2.17 2.77v3.7h-1.8v-3.28c0-.78-.01-1.79-1.09-1.79s-1.26.85-1.26 1.73v3.34H11z"/></svg></a>
+      <a class="js-orcid" href="#" title="ORCID" aria-label="ORCID"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.516.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.025-5.325 5.025h-3.919V7.416zm1.444 1.303v7.444h2.297c3.272 0 4.022-2.484 4.022-3.722 0-2.016-1.284-3.722-4.097-3.722h-2.222z"/></svg></a>
       <a href="mailto:gustavofunchal@ipb.pt" title="Email" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
     </div>
   </div>
@@ -523,12 +551,12 @@ document.querySelectorAll('.card').forEach(card => {
 })();
 
 /* ---------- placeholder links (edit these once) ---------- */
-const SCHOLAR = "https://scholar.google.com/citations?user=eegfgI4AAAAJ&hl=pt-PT&oi=ao"; 
-const ORCID   = "https://orcid.org/0000-0002-9691-9956"; 
-const CV      = "https://www.cienciavitae.pt/9416-F3F1-B3EF"; 
-['scholar','scholar-2','scholar-inline'].forEach(id=>{ const el=document.getElementById(id); if(el&&SCHOLAR!=="#") el.href=SCHOLAR; });
-['orcid','orcid-2'].forEach(id=>{ const el=document.getElementById(id); if(el&&ORCID!=="#") el.href=ORCID; });
-const cv=document.getElementById('cv-link'); if(cv&&CV!=="#") cv.href=CV;
+const SCHOLAR = "https://scholar.google.com/citations?user=eegfgI4AAAAJ&hl=pt-PT&oi=ao";
+const ORCID   = "https://orcid.org/0000-0002-9691-9956";
+const CV      = "https://www.cienciavitae.pt/9416-F3F1-B3EF";
+document.querySelectorAll('.js-scholar').forEach(el => { if (SCHOLAR !== "#") el.href = SCHOLAR; });
+document.querySelectorAll('.js-orcid').forEach(el => { if (ORCID !== "#") el.href = ORCID; });
+const cv = document.getElementById('cv-link'); if (cv && CV !== "#") cv.href = CV;
 </script>
 </body>
 </html>
