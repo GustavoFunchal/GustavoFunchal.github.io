@@ -404,7 +404,7 @@ footer p{ font-family:var(--mono); font-size:.74rem; color:var(--ink-faint)}
   <div class="sec-head reveal"><span class="sec-num">04</span><h2>Projects &amp; resources</h2><span class="rule"></span></div>
   <div class="grid">
 
-    <a class="card reveal d1" href="https://cybersec.ipb.pt/ctf-ieee-ies" target="_blank" rel="noopener">
+    <a class="card reveal d1" href="https://cybersec.ipb.pt/projects/" target="_blank" rel="noopener">
       <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 22V4l8-2 8 2v18M4 8h16M4 14h16"/><circle cx="12" cy="11" r="2"/></svg></div>
       <h3>IEEE IES International CTF</h3>
       <p>Capture the Flag competition on cybersecurity in IoT-based applications.</p>
