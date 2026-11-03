@@ -558,5 +558,6 @@ document.querySelectorAll('.js-scholar').forEach(el => { if (SCHOLAR !== "#") el
 document.querySelectorAll('.js-orcid').forEach(el => { if (ORCID !== "#") el.href = ORCID; });
 const cv = document.getElementById('cv-link'); if (cv && CV !== "#") cv.href = CV;
 </script>
+<script src="chatbot.js" defer></script>
 </body>
 </html>
