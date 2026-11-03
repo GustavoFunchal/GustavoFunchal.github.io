@@ -8,7 +8,7 @@
 
   /* ---------------- 1. Config ---------------- */
   const CONFIG = {
-    email:    'gustavofunchal@ipb.pt',
+    email:    'gustavofunchal@unipb.pt',
     scholar:  'https://scholar.google.com/citations?user=eegfgI4AAAAJ&hl=pt-PT&oi=ao',
     orcid:    'https://orcid.org/0000-0002-9691-9956',
     linkedin: 'https://www.linkedin.com/in/gustavo-silva-funchal-bba32014a/',
