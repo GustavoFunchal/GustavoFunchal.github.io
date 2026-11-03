@@ -272,7 +272,7 @@ footer p{ font-family:var(--mono); font-size:.74rem; color:var(--ink-faint)}
       <div class="affil reveal d3">
         <span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h.01M15 9h.01M9 13h.01M15 13h.01"/></svg>
-          <a href="https://cedri.ipb.pt/" target="_blank" rel="noopener" class="affil-link">CeDRI</a> · Instituto Politécnico de Bragança
+          <a href="https://cedri.ipb.pt/" target="_blank" rel="noopener" class="affil-link">CeDRI</a> · Universidade Politécnica de Bragança
         </span>
         <span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18"/></svg>
