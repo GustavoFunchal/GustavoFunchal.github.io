@@ -189,6 +189,8 @@ section{ padding:90px 0; position:relative}
 .pub .links a{ font-family:var(--mono); font-size:.74rem; color:var(--accent); text-decoration:none; letter-spacing:.03em}
 .pub .links a:hover{ text-decoration:underline}
 .pub .links a.disabled{ color:var(--ink-faint); pointer-events:none}
+.pub .links a.demo{ border:1px solid rgba(79,224,196,.45); border-radius:999px; padding:3px 11px; margin-top:-4px}
+.pub .links a.demo:hover{ background:var(--glow); text-decoration:none}
 
 /* project cards */
 .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px}
@@ -357,6 +359,20 @@ footer p{ font-family:var(--mono); font-size:.74rem; color:var(--ink-faint)}
   <div class="pub reveal">
     <div class="yr">2026</div>
     <div>
+      <div class="venue">Electronics (MDPI) · Vol. 15, Issue 21</div>
+      <h3>Trust-Based Selective Collaboration for Multi-Agent Intrusion Detection in IIoT</h3>
+      <p>Each local agent learns from its own experience which peers give useful advice and consults only those, reducing harmful collaboration, message volume and latency.</p>
+      <div class="links">
+        <a href="https://doi.org/10.3390/electronics15215190" target="_blank" rel="noopener">https://doi.org/10.3390/electronics15215190</a>
+        <a class="js-scholar" href="#" target="_blank" rel="noopener">Cite</a>
+        <a class="demo" href="TRUST-demo.html">Test demo →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="pub reveal">
+    <div class="yr">2026</div>
+    <div>
       <div class="venue">Springer Nature Computer Science</div>
       <h3>A Cloud-Driven Support Layer for Enhancing Distributed IDS in IoT Networks</h3>
       <p>Introduces a cloud layer where global agents use reinforcement learning to adaptively tune the collaborative detection process across heterogeneous local agents.</p>
@@ -403,6 +419,13 @@ footer p{ font-family:var(--mono); font-size:.74rem; color:var(--ink-faint)}
 <section id="projects">
   <div class="sec-head reveal"><span class="sec-num">04</span><h2>Projects &amp; resources</h2><span class="rule"></span></div>
   <div class="grid">
+
+    <a class="card reveal d1" href="TRUST-demo.html">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="2.5"/><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 7l3 3.5M17 7l-3 3.5M7 17l3-3.5M17 17l-3-3.5"/></svg></div>
+      <h3>Live demo — Trust-based IDS</h3>
+      <p>Interactive simulation: watch IDS agents collaborate peer-to-peer and learn whom to trust when a neighbour is compromised.</p>
+      <span class="more">Open demo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
 
     <a class="card reveal d1" href="https://cybersec.ipb.pt/projects/" target="_blank" rel="noopener">
       <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 22V4l8-2 8 2v18M4 8h16M4 14h16"/><circle cx="12" cy="11" r="2"/></svg></div>
