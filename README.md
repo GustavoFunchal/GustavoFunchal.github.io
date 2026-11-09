@@ -363,7 +363,7 @@ footer p{ font-family:var(--mono); font-size:.74rem; color:var(--ink-faint)}
       <h3>Trust-Based Selective Collaboration for Multi-Agent Intrusion Detection in IIoT</h3>
       <p>Each local agent learns from its own experience which peers give useful advice and consults only those, reducing harmful collaboration, message volume and latency.</p>
       <div class="links">
-        <a href="https://doi.org/10.3390/electronics15215190" target="_blank" rel="noopener">https://doi.org/10.3390/electronics15215190</a>
+        <a href="https://www.mdpi.com/2079-9292/15/21/5190" target="_blank" rel="noopener">https://www.mdpi.com/2079-9292/15/21/5190</a>
         <a class="js-scholar" href="#" target="_blank" rel="noopener">Cite</a>
         <a class="demo" href="TRUST-demo.html">Test demo →</a>
       </div>
