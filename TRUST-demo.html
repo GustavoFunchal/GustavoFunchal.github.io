@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Live demo — Trust-based collaborative IDS · Gustavo Funchal</title>
+<meta name="description" content="Interactive demo: local IDS agents collaborate peer-to-peer and use trust to stop weak or compromised neighbours from spreading wrong answers.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#070b14; --bg-soft:#0c1322; --panel:#0f1828;
+  --line:rgba(120,160,200,.12);
+  --ink:#e8eef6; --ink-soft:#9fb0c6; --ink-faint:#5e708a;
+  --accent:#4fe0c4; --accent-2:#7aa2ff; --amber:#f5b453; --red:#ff6b81;
+  --glow:rgba(79,224,196,.16);
+  --serif:"Fraunces",Georgia,serif;
+  --sans:"Hanken Grotesk",system-ui,sans-serif;
+  --mono:"JetBrains Mono",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(900px 600px at 82% -10%,var(--glow),transparent 60%),
+             radial-gradient(700px 500px at 0% 25%,rgba(122,162,255,.08),transparent 60%)}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;
+  padding:16px 28px;backdrop-filter:blur(10px);background:rgba(7,11,20,.8);border-bottom:1px solid var(--line)}
+nav .brand{font-family:var(--mono);font-size:.82rem;letter-spacing:.04em;color:var(--ink);text-decoration:none}
+nav .brand b{color:var(--accent);font-weight:500}
+nav .back{font-family:var(--mono);font-size:.74rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);text-decoration:none}
+nav .back:hover{color:var(--accent)}
+
+.wrap{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:0 24px}
+
+.intro{padding:112px 0 30px}
+.kicker{font-family:var(--mono);font-size:.76rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);
+  margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.kicker .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);animation:pulse 2.4s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(2rem,4.6vw,3.2rem);line-height:1.08;letter-spacing:-.015em;margin-bottom:16px;max-width:900px}
+h1 em{font-style:italic;color:var(--accent)}
+.lead{color:var(--ink-soft);max-width:760px;font-size:1.06rem}
+.lead b{color:var(--ink);font-weight:600}
+.note{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-family:var(--mono);font-size:.7rem;
+  color:var(--ink-faint);border:1px solid var(--line);border-radius:999px;padding:6px 12px}
+
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 370px;gap:18px;align-items:start}
+@media(max-width:1000px){.layout{grid-template-columns:1fr}}
+.panel{background:rgba(15,24,40,.86);border:1px solid var(--line);border-radius:18px}
+
+.stage{position:relative;height:min(660px,80vh);min-height:470px;overflow:hidden}
+@media(max-width:600px){.stage{height:auto;min-height:0}#sim{height:auto;aspect-ratio:1/1.05}.stage .legend{position:static;padding:0 16px 14px}}
+#sim{display:block;width:100%;height:100%;touch-action:manipulation}
+.stage-top{position:absolute;left:16px;top:14px;right:16px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;pointer-events:none}
+.mode-badge{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px;border:1px solid currentColor;background:rgba(7,11,20,.6)}
+.hover-info{font-family:var(--mono);font-size:.7rem;color:var(--ink-soft);text-align:right;min-height:1em;max-width:60%}
+.legend{position:absolute;left:16px;bottom:12px;right:16px;display:flex;flex-wrap:wrap;gap:4px 16px;font-family:var(--mono);font-size:.68rem;color:var(--ink-faint);pointer-events:none}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{display:inline-block;width:16px;height:2px;border-radius:2px}
+.legend i.ring{width:10px;height:10px;border-radius:50%;border:2px solid var(--red);background:transparent}
+
+.side{display:flex;flex-direction:column;gap:14px}
+.box{padding:18px}
+.box h2{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);font-weight:500;margin-bottom:12px}
+
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:4px}
+.seg button{font-family:var(--mono);font-size:.74rem;letter-spacing:.04em;padding:8px 0;border-radius:9px;border:0;background:transparent;color:var(--ink-soft);cursor:pointer;transition:background .2s,color .2s}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--panel);color:var(--mc,var(--accent));box-shadow:inset 0 0 0 1px var(--mc,var(--accent))}
+.seg-desc{font-size:.8rem;color:var(--ink-faint);margin-top:8px;min-height:2.6em}
+
+.ctrl{margin-top:14px}
+.ctrl label{display:flex;justify-content:space-between;align-items:baseline;font-size:.86rem;color:var(--ink-soft);margin-bottom:4px}
+.ctrl output{font-family:var(--mono);font-size:.8rem;color:var(--ink)}
+.ctrl input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
+.ctrl .hint{font-size:.74rem;color:var(--ink-faint)}
+
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.btn{font-family:var(--mono);font-size:.72rem;padding:9px 13px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;transition:all .2s}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.warn{border-color:rgba(255,107,129,.4);color:var(--red)}
+.btn.warn:hover{background:rgba(255,107,129,.08);border-color:var(--red)}
+.btn:focus-visible,.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tile{border:1px solid var(--line);border-radius:12px;padding:10px 10px 8px;background:var(--bg-soft);transition:border-color .2s}
+.tile.sel{border-color:var(--mc)}
+.tile .k{font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:6px}
+.tile .k i{width:8px;height:8px;border-radius:50%;background:var(--mc)}
+.tile .v{font-family:var(--serif);font-size:1.45rem;line-height:1.25;margin-top:2px;font-variant-numeric:tabular-nums}
+#chart{width:100%;height:130px;display:block;margin-top:12px}
+.mini{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:12px;font-family:var(--mono);font-size:.68rem;color:var(--ink-faint)}
+.mini b{display:block;font-size:.9rem;font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
+.mini .fix b{color:var(--accent)} .mini .harm b{color:var(--red)}
+#heat{width:100%;display:block;aspect-ratio:1/1}
+.sub{font-size:.76rem;color:var(--ink-faint);margin-top:10px}
+
+.how{padding:70px 0 30px}
+.how .head{display:flex;align-items:baseline;gap:16px;margin-bottom:28px}
+.how .head span{font-family:var(--mono);font-size:.8rem;color:var(--accent)}
+.how .head h2{font-family:var(--serif);font-weight:400;font-size:clamp(1.6rem,3.4vw,2.2rem)}
+.how .head .rule{flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.step{padding:22px}
+.step .n{font-family:var(--mono);font-size:.74rem;color:var(--accent)}
+.step h3{font-family:var(--serif);font-weight:500;font-size:1.15rem;margin:6px 0 8px}
+.step p{color:var(--ink-soft);font-size:.93rem}
+.step code{font-family:var(--mono);font-size:.84em;color:var(--ink)}
+.try{margin-top:14px;padding:24px}
+.try h3{font-family:var(--serif);font-weight:500;font-size:1.15rem;margin-bottom:10px}
+.try ol{margin-left:20px;color:var(--ink-soft);font-size:.95rem}
+.try li{margin-bottom:6px}
+.try li b{color:var(--ink);font-weight:600}
+
+footer{padding:40px 0 50px;text-align:center;border-top:1px solid var(--line);margin-top:40px;position:relative;z-index:1}
+footer p{font-family:var(--mono);font-size:.72rem;color:var(--ink-faint)}
+footer a{color:var(--ink-soft)}
+
+@media(prefers-reduced-motion:reduce){.kicker .dot{animation:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="./" class="brand">gustavo<b>.funchal</b></a>
+  <a href="./#projects" class="back">← Back to site</a>
+</nav>
+
+<main class="wrap">
+  <header class="intro">
+    <div class="kicker"><span class="dot"></span> Interactive demo · Collaborative IDS</div>
+    <h1>When should an IDS agent <em>trust</em> its neighbours?</h1>
+    <p class="lead">
+      Ten local agents, each running a different ML classifier on an edge device, inspect network traffic.
+      When an agent is unsure (confidence below <b>θ</b>), it asks peers for a second opinion, <b>peer-to-peer</b>.
+      With <b>trust</b>, it only asks peers that have proven reliable, so a weak or compromised neighbour
+      stops spreading wrong answers.
+    </p>
+    <span class="note">● Synthetic simulation for illustration · not experimental data</span>
+  </header>
+
+  <div class="layout">
+    <!-- ============ STAGE ============ -->
+    <div class="panel stage">
+      <canvas id="sim" aria-label="Simulation of ten local agents arranged in a ring around a global agent. Click an agent to compromise or restore it."></canvas>
+      <div class="stage-top">
+        <span class="mode-badge" id="modeBadge">Trust</span>
+        <span class="hover-info" id="hoverInfo">Click an agent to compromise it</span>
+      </div>
+      <div class="legend">
+        <span><i style="background:var(--accent)"></i>peer answered correctly</span>
+        <span><i style="background:var(--red)"></i>peer answered wrongly</span>
+        <span><i style="background:var(--accent-2)"></i>report to global agent</span>
+        <span><i class="ring"></i>compromised agent</span>
+      </div>
+    </div>
+
+    <!-- ============ SIDE ============ -->
+    <aside class="side">
+      <div class="panel box">
+        <h2>Collaboration strategy</h2>
+        <div class="seg" role="group" aria-label="Collaboration strategy">
+          <button data-mode="SOLO" aria-pressed="false">Solo</button>
+          <button data-mode="NAIVE" aria-pressed="false">Naive</button>
+          <button data-mode="TRUST" aria-pressed="true">Trust</button>
+        </div>
+        <p class="seg-desc" id="modeDesc"></p>
+
+        <div class="ctrl">
+          <label for="theta">Self-confidence threshold θ <output id="thetaOut">0.80</output></label>
+          <input type="range" id="theta" min="0.55" max="0.95" step="0.01" value="0.80">
+          <div class="hint">Below θ, an agent asks for help.</div>
+        </div>
+        <div class="ctrl">
+          <label for="tau">Trust threshold τ <output id="tauOut">0.45</output></label>
+          <input type="range" id="tau" min="0.20" max="0.80" step="0.01" value="0.45">
+          <div class="hint">Trust mode only asks peers with trust ≥ τ (top-3).</div>
+        </div>
+        <div class="ctrl">
+          <label for="speed">Speed <output id="speedOut">4 steps/s</output></label>
+          <input type="range" id="speed" min="1" max="20" step="1" value="4">
+        </div>
+
+        <div class="btns">
+          <button class="btn warn" id="btnCompromise">Compromise an agent</button>
+          <button class="btn" id="btnRestore">Restore all</button>
+          <button class="btn" id="btnPause">Pause</button>
+          <button class="btn" id="btnReset">Reset</button>
+        </div>
+      </div>
+
+      <div class="panel box">
+        <h2>Detection accuracy · honest agents</h2>
+        <div class="tiles">
+          <div class="tile" data-mode="SOLO"><div class="k"><i></i>Solo</div><div class="v" id="accSOLO">–</div></div>
+          <div class="tile" data-mode="NAIVE"><div class="k"><i></i>Naive</div><div class="v" id="accNAIVE">–</div></div>
+          <div class="tile" data-mode="TRUST"><div class="k"><i></i>Trust</div><div class="v" id="accTRUST">–</div></div>
+        </div>
+        <canvas id="chart" aria-label="Rolling accuracy over time for the three strategies"></canvas>
+        <div class="mini">
+          <div>help requests<b id="mAsked">0</b></div>
+          <div class="fix">corrected<b id="mFixed">0</b></div>
+          <div class="harm">made worse<b id="mHarmed">0</b></div>
+        </div>
+        <p class="sub">All three strategies run side by side on the same traffic. Counters refer to the selected one.</p>
+      </div>
+
+      <div class="panel box">
+        <h2>Trust matrix · trust mode</h2>
+        <canvas id="heat" aria-label="Trust matrix: how much each agent trusts each peer"></canvas>
+        <p class="sub">Row = agent asking, column = peer. Brighter = more trusted.</p>
+      </div>
+    </aside>
+  </div>
+
+  <!-- ============ HOW IT WORKS ============ -->
+  <section class="how">
+    <div class="head"><span>—</span><h2>How it works</h2><span class="rule"></span></div>
+    <div class="steps">
+      <div class="panel step"><div class="n">01</div><h3>Detect locally</h3>
+        <p>Each local agent classifies its own traffic (normal or attack) with its own model: RF, KNN, Naive Bayes, MLP and others, each with a different accuracy.</p></div>
+      <div class="panel step"><div class="n">02</div><h3>Ask when unsure</h3>
+        <p>If its confidence is below <code>θ</code>, the agent asks up to three peers directly. <i>Naive</i> picks peers at random; <i>Trust</i> picks the most trusted peers above <code>τ</code>.</p></div>
+      <div class="panel step"><div class="n">03</div><h3>Aggregate</h3>
+        <p>The agent combines its own answer with the peers' answers, weighted by each classifier's confidence, and makes the final decision.</p></div>
+      <div class="panel step"><div class="n">04</div><h3>Learn whom to trust</h3>
+        <p>When a peer disagrees, its trust is updated (EMA, β = 0.1): up if it was right, down if it was wrong. The global agent only receives periodic reports.</p></div>
+    </div>
+
+    <div class="panel try">
+      <h3>Try this</h3>
+      <ol>
+        <li>Let it run for a few seconds: <b>Naive</b> and <b>Trust</b> both beat <b>Solo</b>, because unsure agents get useful second opinions.</li>
+        <li>Click <b>Compromise an agent</b> (or click a node). It now answers every help request with the wrong label, confidently.</li>
+        <li>Switch to <b>Naive</b>: red links appear and accuracy drops, because the bad neighbour keeps being asked. This is negative transfer.</li>
+        <li>Switch back to <b>Trust</b>: the compromised agent's trust ring shrinks, its column in the matrix fades, and peers stop asking it.</li>
+        <li>Click <b>Restore all</b>: occasional exploration lets agents rediscover the recovered peer and rebuild trust.</li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>© <span id="yr"></span> Gustavo Funchal · <a href="./">Back to main page</a></p>
+</footer>
+
+<script>
+(function () {
+'use strict';
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+/* ================= parameters ================= */
+const COL = { accent:'#4fe0c4', blue:'#7aa2ff', amber:'#f5b453', red:'#ff6b81',
+              ink:'#e8eef6', soft:'#9fb0c6', faint:'#5e708a', panel:'#0f1828', bg:'#070b14' };
+const MODES = {
+  SOLO:  { color: COL.soft,   label:'Solo',  desc:'Each agent decides alone. No collaboration.' },
+  NAIVE: { color: COL.amber,  label:'Naive', desc:'Unsure agents ask 3 random peers, with no notion of trust.' },
+  TRUST: { color: COL.accent, label:'Trust', desc:'Unsure agents ask their 3 most trusted peers above τ, and keep learning whom to trust.' }
+};
+const MODELS = [['RF',.94],['KNN',.86],['NB',.72],['MLP',.89],['LDA',.76],['ET',.93],['SVM',.84],['LR',.80],['DT',.88],['AdaBoost',.83]];
+const N = MODELS.length;
+const P = { theta:.80, tau:.45, k:3, beta:.10, eps:.05, speed:4, pAttack:.35, win:400, histLen:240 };
+const FADE = 650, REPORT_EVERY = 2600, REPORT_DUR = 1100;
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (reduceMotion) { P.speed = 2; document.getElementById('speed').value = 2; }
+
+const agents = MODELS.map(([model, acc], i) => ({ id:'A' + (i + 1), model, acc, compromised:false, x:0, y:0, flash:0, flashOk:true }));
+let mode = 'TRUST';
+let sys, T, edges = [], reports = [], lastReport = 0, running = true, dirty = true;
+
+/* ================= model ================= */
+const newSys = () => ({ win:[], correct:0, hist:[], asked:0, fixed:0, harmed:0 });
+function reset() {
+  sys = { SOLO:newSys(), NAIVE:newSys(), TRUST:newSys() };
+  T = Array.from({length:N}, (_, i) => Array.from({length:N}, (_, j) => i === j ? 1 : 0.5 + Math.random() * 0.02));
+  edges = []; reports = []; dirty = true;
+}
+function opinion(acc, y) {
+  const ok = Math.random() < acc;
+  const conf = ok ? 0.6 + 0.4 * Math.pow(Math.random(), 0.6) : 0.5 + 0.35 * Math.random();
+  return { pred: ok ? y : 1 - y, conf };
+}
+const pAttack = (o) => o.pred === 1 ? o.conf : 1 - o.conf;
+function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+function selectPeers(m, i) {
+  const others = []; for (let j = 0; j < N; j++) if (j !== i) others.push(j);
+  if (m === 'NAIVE') return shuffle(others).slice(0, P.k);
+  const cand = others.filter(j => T[i][j] >= P.tau).sort((a, b) => T[i][b] - T[i][a]).slice(0, P.k);
+  if (Math.random() < P.eps) {                          // occasional exploration
+    const rest = others.filter(j => !cand.includes(j));
+    if (rest.length) { const pick = rest[Math.floor(Math.random() * rest.length)];
+      if (cand.length >= P.k) cand[cand.length - 1] = pick; else cand.push(pick); }
+  }
+  return cand;
+}
+function record(s, ok) {
+  s.win.push(ok ? 1 : 0); s.correct += ok ? 1 : 0;
+  if (s.win.length > P.win) s.correct -= s.win.shift();
+}
+const accOf = (s) => s.win.length ? s.correct / s.win.length : NaN;
+
+function tick(now) {
+  for (let i = 0; i < N; i++) {
+    const a = agents[i];
+    if (a.compromised) continue;                         // metrics only count honest agents
+    const y = Math.random() < P.pAttack ? 1 : 0;
+    const own = opinion(a.acc, y);
+    const resp = agents.map((b, j) => j === i ? null
+      : b.compromised ? { pred: 1 - y, conf: 0.9 + 0.1 * Math.random() }   // confidently wrong
+      : opinion(b.acc, y));
+
+    for (const m of ['SOLO', 'NAIVE', 'TRUST']) {
+      const s = sys[m];
+      let final = own.pred, helpers = [];
+      if (m !== 'SOLO' && own.conf < P.theta) {
+        helpers = selectPeers(m, i);
+        if (helpers.length) {
+          s.asked++;
+          let num = own.conf * pAttack(own), den = own.conf;
+          for (const h of helpers) { num += resp[h].conf * pAttack(resp[h]); den += resp[h].conf; }
+          final = num / den >= 0.5 ? 1 : 0;
+          if (m === 'TRUST') for (const h of helpers) {
+            if (resp[h].pred !== own.pred) {                // agreement is uninformative
+              const r = resp[h].pred === y ? 1 : 0;
+              T[i][h] += P.beta * (r - T[i][h]);
+            }
+          }
+        }
+      }
+      const ok = final === y;
+      record(s, ok);
+      if (own.pred !== y && ok) s.fixed++;
+      if (own.pred === y && !ok) s.harmed++;
+      if (m === mode && helpers.length) {
+        for (const h of helpers) edges.push({ from:i, to:h, t:now, good: resp[h].pred === y });
+        a.flash = now; a.flashOk = ok;
+      }
+    }
+  }
+  for (const m in sys) { const s = sys[m]; s.hist.push(accOf(s)); if (s.hist.length > P.histLen) s.hist.shift(); }
+  dirty = true;
+}
+
+/* ================= canvas helpers ================= */
+const dpr = () => Math.min(window.devicePixelRatio || 1, 2);
+function fit(cv) {
+  const r = cv.getBoundingClientRect(), d = dpr();
+  const W = Math.max(1, Math.round(r.width * d)), H = Math.max(1, Math.round(r.height * d));
+  if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; }
+  const ctx = cv.getContext('2d'); ctx.setTransform(d, 0, 0, d, 0, 0);
+  return { ctx, w: r.width, h: r.height };
+}
+function rgba(hex, a) { const n = parseInt(hex.slice(1), 16); return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`; }
+function mix(h1, h2, t) {
+  const a = parseInt(h1.slice(1), 16), b = parseInt(h2.slice(1), 16);
+  const c = (s) => Math.round(((a >> s) & 255) + (((b >> s) & 255) - ((a >> s) & 255)) * t);
+  return `rgb(${c(16)},${c(8)},${c(0)})`;
+}
+
+/* ================= stage ================= */
+const sim = document.getElementById('sim');
+let L = { cx:0, cy:0, R:0, r:20 };
+function layout(w, h) {
+  L.cx = w / 2; L.cy = h / 2 + 4;
+  L.R = Math.min(w, h - 70) * 0.37;
+  L.r = Math.max(15, Math.min(25, L.R * 0.12));
+  agents.forEach((a, i) => { const ang = -Math.PI / 2 + i * 2 * Math.PI / N; a.x = L.cx + L.R * Math.cos(ang); a.y = L.cy + L.R * Math.sin(ang); });
+}
+const avgTrustIn = (j) => { let s = 0, c = 0; for (let i = 0; i < N; i++) if (i !== j && !agents[i].compromised) { s += T[i][j]; c++; } return c ? s / c : 0; };
+
+function drawStage(now) {
+  const { ctx, w, h } = fit(sim);
+  layout(w, h);
+  ctx.clearRect(0, 0, w, h);
+
+  // orbit
+  ctx.strokeStyle = 'rgba(120,160,200,.08)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.arc(L.cx, L.cy, L.R, 0, Math.PI * 2); ctx.stroke();
+
+  // reports to global agent
+  if (running && now - lastReport > REPORT_EVERY) {
+    lastReport = now;
+    agents.forEach((a, i) => { if (!a.compromised) reports.push({ i, t: now + Math.random() * 300 }); });
+  }
+  reports = reports.filter(r => now - r.t < REPORT_DUR);
+  for (const r of reports) {
+    const p = (now - r.t) / REPORT_DUR; if (p < 0) continue;
+    const a = agents[r.i];
+    const x = a.x + (L.cx - a.x) * p, y = a.y + (L.cy - a.y) * p;
+    ctx.strokeStyle = rgba(COL.blue, 0.10 * (1 - p)); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(L.cx, L.cy); ctx.stroke();
+    ctx.fillStyle = rgba(COL.blue, 0.8 * (1 - p * 0.6));
+    ctx.beginPath(); ctx.arc(x, y, 2.2, 0, Math.PI * 2); ctx.fill();
+  }
+
+  // help requests
+  edges = edges.filter(e => now - e.t < FADE);
+  for (const e of edges) {
+    const p = (now - e.t) / FADE, a = agents[e.from], b = agents[e.to];
+    const col = e.good ? COL.accent : COL.red;
+    const mx = (a.x + b.x) / 2 + (L.cx - (a.x + b.x) / 2) * 0.25, my = (a.y + b.y) / 2 + (L.cy - (a.y + b.y) / 2) * 0.25;
+    ctx.strokeStyle = rgba(col, 0.55 * (1 - p)); ctx.lineWidth = e.good ? 1.2 : 1.6;
+    ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.quadraticCurveTo(mx, my, b.x, b.y); ctx.stroke();
+    const q = p < 0.5 ? p * 2 : 2 - p * 2;               // request goes out, answer comes back
+    const x = (1 - q) * (1 - q) * a.x + 2 * (1 - q) * q * mx + q * q * b.x;
+    const y = (1 - q) * (1 - q) * a.y + 2 * (1 - q) * q * my + q * q * b.y;
+    ctx.fillStyle = rgba(col, 0.95 * (1 - p * 0.5));
+    ctx.beginPath(); ctx.arc(x, y, 2.4, 0, Math.PI * 2); ctx.fill();
+  }
+
+  // global agent
+  const g = Math.max(34, L.r * 1.7);
+  ctx.fillStyle = COL.panel; ctx.strokeStyle = rgba(COL.blue, 0.55); ctx.lineWidth = 1.2;
+  roundRect(ctx, L.cx - g, L.cy - g * 0.72, g * 2, g * 1.44, 10); ctx.fill(); ctx.stroke();
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillStyle = COL.ink; ctx.font = `500 ${Math.round(L.r * 0.5)}px "JetBrains Mono", monospace`;
+  ctx.fillText('GA', L.cx, L.cy - g * 0.16);
+  ctx.fillStyle = COL.faint; ctx.font = `${Math.max(9, Math.round(L.r * 0.36))}px "JetBrains Mono", monospace`;
+  ctx.fillText('reports only', L.cx, L.cy + g * 0.28);
+
+  // local agents
+  for (let j = 0; j < N; j++) {
+    const a = agents[j];
+    const hot = now - a.flash < 420 ? 1 - (now - a.flash) / 420 : 0;
+    if (hot) {
+      ctx.fillStyle = rgba(a.flashOk ? COL.accent : COL.red, 0.22 * hot);
+      ctx.beginPath(); ctx.arc(a.x, a.y, L.r + 12 * hot + 4, 0, Math.PI * 2); ctx.fill();
+    }
+    if (mode === 'TRUST') {                              // incoming trust ring
+      const t = avgTrustIn(j);
+      ctx.strokeStyle = 'rgba(120,160,200,.12)'; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.arc(a.x, a.y, L.r + 7, 0, Math.PI * 2); ctx.stroke();
+      ctx.strokeStyle = a.compromised ? COL.red : COL.accent;
+      ctx.beginPath(); ctx.arc(a.x, a.y, L.r + 7, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * Math.max(0, Math.min(1, t))); ctx.stroke();
+    }
+    ctx.fillStyle = a.compromised ? '#2a1420' : COL.panel;
+    ctx.strokeStyle = a.compromised ? COL.red : (hover === j ? COL.ink : rgba(COL.accent, 0.6));
+    ctx.lineWidth = a.compromised ? 2 : 1.3;
+    ctx.beginPath(); ctx.arc(a.x, a.y, L.r, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+
+    ctx.fillStyle = a.compromised ? COL.red : COL.ink;
+    ctx.font = `500 ${Math.round(L.r * 0.56)}px "JetBrains Mono", monospace`;
+    ctx.fillText(a.id, a.x, a.y + 1);
+    const below = a.y > L.cy - 1 ? 1 : (a.y < L.cy - L.R * 0.5 ? -1 : 1);
+    const ly = a.y + below * (L.r + (mode === 'TRUST' ? 22 : 16));
+    ctx.font = `${Math.max(9, Math.round(L.r * 0.44))}px "JetBrains Mono", monospace`;
+    ctx.fillStyle = a.compromised ? COL.red : COL.faint;
+    ctx.fillText(a.compromised ? 'compromised' : a.model, a.x, ly);
+  }
+}
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
+}
+
+/* ================= chart ================= */
+const chart = document.getElementById('chart');
+function drawChart() {
+  const { ctx, w, h } = fit(chart);
+  ctx.clearRect(0, 0, w, h);
+  let lo = 1;
+  for (const m in sys) for (const v of sys[m].hist) if (!isNaN(v)) lo = Math.min(lo, v);
+  lo = Math.max(0, Math.floor((lo - 0.02) * 20) / 20); const hi = 1;
+  const padL = 30, padB = 4, padT = 6;
+  const Y = (v) => padT + (h - padT - padB) * (1 - (v - lo) / (hi - lo));
+  ctx.font = '10px "JetBrains Mono", monospace'; ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+  for (let v = lo; v <= hi + 1e-9; v += 0.05) {
+    ctx.strokeStyle = 'rgba(120,160,200,.08)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(padL, Y(v)); ctx.lineTo(w, Y(v)); ctx.stroke();
+    ctx.fillStyle = COL.faint; ctx.fillText(Math.round(v * 100) + '%', padL - 6, Y(v));
+  }
+  const order = ['SOLO', 'NAIVE', 'TRUST'].sort((a, b) => (a === mode) - (b === mode));
+  for (const m of order) {
+    const hs = sys[m].hist; if (hs.length < 2) continue;
+    ctx.strokeStyle = MODES[m].color; ctx.lineWidth = m === mode ? 2.2 : 1.3; ctx.globalAlpha = m === mode ? 1 : 0.7;
+    ctx.beginPath();
+    hs.forEach((v, k) => { const x = padL + (w - padL) * k / (P.histLen - 1); if (k) ctx.lineTo(x, Y(v)); else ctx.moveTo(x, Y(v)); });
+    ctx.stroke(); ctx.globalAlpha = 1;
+  }
+}
+
+/* ================= trust heatmap ================= */
+const heat = document.getElementById('heat');
+function drawHeat() {
+  const { ctx, w } = fit(heat);
+  ctx.clearRect(0, 0, w, w);
+  const lab = 30, c = (w - lab) / N;
+  ctx.font = `${Math.max(8, Math.min(11, c * 0.36))}px "JetBrains Mono", monospace`;
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  for (let j = 0; j < N; j++) {
+    ctx.fillStyle = agents[j].compromised ? COL.red : COL.faint;
+    ctx.fillText(agents[j].id, lab + c * j + c / 2, lab / 2);
+    ctx.fillText(agents[j].id, lab / 2, lab + c * j + c / 2);
+  }
+  for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) {
+    const x = lab + c * j, y = lab + c * i;
+    if (i === j) { ctx.fillStyle = '#0a101c'; }
+    else { const t = Math.max(0, Math.min(1, T[i][j])); ctx.fillStyle = mix('#111a2b', agents[j].compromised && t < .35 ? '#ff6b81' : '#4fe0c4', agents[j].compromised && t < .35 ? 0.25 : t); }
+    ctx.fillRect(x + 1, y + 1, c - 2, c - 2);
+    if (i !== j && T[i][j] < P.tau) {                     // below threshold: never asked (except exploration)
+      ctx.strokeStyle = 'rgba(7,11,20,.7)'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(x + 3, y + c - 3); ctx.lineTo(x + c - 3, y + 3); ctx.stroke();
+    }
+  }
+}
+
+/* ================= UI ================= */
+const $ = (id) => document.getElementById(id);
+const fmt = (v) => isNaN(v) ? '–' : (v * 100).toFixed(1) + '%';
+function updateUI() {
+  for (const m in sys) $('acc' + m).textContent = fmt(accOf(sys[m]));
+  const s = sys[mode];
+  $('mAsked').textContent = mode === 'SOLO' ? '–' : s.asked.toLocaleString('en');
+  $('mFixed').textContent = mode === 'SOLO' ? '–' : s.fixed.toLocaleString('en');
+  $('mHarmed').textContent = mode === 'SOLO' ? '–' : s.harmed.toLocaleString('en');
+  drawChart(); drawHeat();
+}
+function setMode(m) {
+  mode = m; edges = [];
+  document.querySelectorAll('.seg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === m)));
+  document.querySelectorAll('.seg button, .tile').forEach(el => el.style.setProperty('--mc', MODES[el.dataset.mode].color));
+  document.querySelectorAll('.tile').forEach(t => t.classList.toggle('sel', t.dataset.mode === m));
+  const badge = $('modeBadge'); badge.textContent = MODES[m].label; badge.style.color = MODES[m].color;
+  $('modeDesc').textContent = MODES[m].desc;
+  dirty = true;
+}
+document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
+
+function bindRange(id, key, out, f) {
+  const el = $(id);
+  const upd = () => { P[key] = parseFloat(el.value); $(out).textContent = f(P[key]); dirty = true; };
+  el.addEventListener('input', upd); upd();
+}
+bindRange('theta', 'theta', 'thetaOut', v => v.toFixed(2));
+bindRange('tau', 'tau', 'tauOut', v => v.toFixed(2));
+bindRange('speed', 'speed', 'speedOut', v => v + ' steps/s');
+
+function toggleAgent(j) {
+  agents[j].compromised = !agents[j].compromised; dirty = true;
+  if (agents.every(a => a.compromised)) agents[j].compromised = false;
+}
+$('btnCompromise').addEventListener('click', () => {
+  const honest = agents.map((a, i) => i).filter(i => !agents[i].compromised);
+  if (honest.length > 2) toggleAgent(honest[Math.floor(Math.random() * honest.length)]);
+});
+$('btnRestore').addEventListener('click', () => { agents.forEach(a => a.compromised = false); dirty = true; });
+$('btnPause').addEventListener('click', (e) => { running = !running; e.target.textContent = running ? 'Pause' : 'Play'; });
+$('btnReset').addEventListener('click', () => { agents.forEach(a => a.compromised = false); reset(); updateUI(); });
+
+/* hover + click on agents */
+let hover = -1;
+function hit(ev) {
+  const r = sim.getBoundingClientRect(), x = ev.clientX - r.left, y = ev.clientY - r.top;
+  for (let j = 0; j < N; j++) if (Math.hypot(agents[j].x - x, agents[j].y - y) < L.r + 8) return j;
+  return -1;
+}
+sim.addEventListener('pointermove', (ev) => {
+  hover = hit(ev); sim.style.cursor = hover >= 0 ? 'pointer' : 'default';
+  const info = $('hoverInfo');
+  if (hover >= 0) {
+    const a = agents[hover];
+    info.textContent = `${a.id} · ${a.model} · base accuracy ${Math.round(a.acc * 100)}% · trust ${avgTrustIn(hover).toFixed(2)}` + (a.compromised ? ' · COMPROMISED' : '');
+    info.style.color = a.compromised ? COL.red : COL.soft;
+  } else { info.textContent = 'Click an agent to compromise it'; info.style.color = COL.soft; }
+});
+sim.addEventListener('pointerleave', () => { hover = -1; });
+sim.addEventListener('click', (ev) => { const j = hit(ev); if (j >= 0) toggleAgent(j); });
+
+/* ================= loop ================= */
+reset(); setMode('TRUST');
+let last = performance.now(), acc = 0, uiTimer = 0;
+function loop(now) {
+  const dt = Math.min(250, now - last); last = now;
+  if (running) {
+    acc += dt; const step = 1000 / P.speed; let n = 0;
+    while (acc >= step && n < 6) { tick(now); acc -= step; n++; }
+  }
+  drawStage(now);
+  uiTimer += dt;
+  if (dirty && uiTimer > 120) { updateUI(); dirty = false; uiTimer = 0; }
+  requestAnimationFrame(loop);
+}
+// warm up so the charts are not empty on first view
+for (let k = 0; k < 60; k++) tick(performance.now() - 5000);
+updateUI();
+requestAnimationFrame(loop);
+addEventListener('resize', () => { dirty = true; });
+})();
+</script>
+</body>
+</html>
