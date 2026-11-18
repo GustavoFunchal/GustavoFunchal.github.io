@@ -61,6 +61,7 @@
 
     { id: 'publications', keys: ['publication', 'paper', 'article', 'publish', 'journal', 'conference', 'doi', 'springer', 'icissp', 'icps', 'ieee', 'artigo', 'publicacao', 'publicacoes', 'publicacion', 'articulo', 'cite', 'citation'],
       answer: () => `Selected publications:<ul>` +
+        `<li><b>2026</b> · ${a('https://www.mdpi.com/2079-9292/15/21/5190', 'Trust-Based Selective Collaboration for Multi-Agent Intrusion Detection in IIoT')} (Electronics - MDPI)</li>` +
         `<li><b>2026</b> · ${a('https://doi.org/10.1007/s42979-026-04750-x', 'A Cloud-Driven Support Layer for Enhancing Distributed IDS in IoT Networks')} (SN Computer Science)</li>` +
         `<li><b>2025</b> · ${a('https://www.scitepress.org/Papers/2025/131544/131544.pdf', 'Distributed Machine Learning and Multi-Agent Systems for Enhanced Attack Detection and Resilience in IoT Networks')} (ICISSP)</li>` +
         `<li><b>2024</b> · ${a('https://doi.org/10.1109/ICPS59941.2024.10639952', 'Edge Multi-agent Intrusion Detection System Architecture for IoT Devices with Cloud Continuum')} (IEEE ICPS)</li>` +
