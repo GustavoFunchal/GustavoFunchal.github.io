@@ -321,7 +321,7 @@ footer p{ font-family:var(--mono); font-size:.74rem; color:var(--ink-faint)}
   <div class="sec-head reveal"><span class="sec-num">01</span><h2>About</h2><span class="rule"></span></div>
   <p class="prose reveal d1">
     I'm a final-year PhD researcher at <b>CeDRI</b> (Research Centre in Digitalization and Intelligent
-    Robotics), Instituto Politécnico de Bragança, Portugal, and affiliated with the <b>BISITE</b> group
+    Robotics), Braganca Polytechnic University, Portugal, and affiliated with the <b>BISITE</b> group
     at the University of Salamanca. My work is supported by an <b>FCT</b> PhD grant.
   </p>
   <p class="prose reveal d2" style="margin-top:18px">
